@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-06-17T13:45:04+09:00",
+    "generated_at": "2026-06-17T22:28:33+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -26,15 +26,14 @@
         "eps_valid_from": "YYYY-MM-DD|null — 当日有効EPS の valid_from",
         "eps_event": "null | 'regular_earnings' | 'guidance_revision' — EPS切替日のみ非null"
       }
-    },
-    "timeseries_generated_at": "2026-06-17T13:57:31+09:00"
+    }
   },
   "market_data": {
     "_comment": "レイヤー1。バッチがyfinanceから日次取得。",
     "kioxia_price_jpy": {
-      "value": 95120.0,
+      "value": 96000.0,
       "as_of": "2026-06-17T00:00:00+09:00",
-      "change_pct": 0.4223,
+      "change_pct": 1.3514,
       "status": "ok",
       "source": "yfinance:285A.T",
       "market": "JP",
@@ -69,7 +68,7 @@
       },
       "calc": {
         "price": {
-          "value": 95120.0,
+          "value": 96000.0,
           "currency": "JPY",
           "as_of": "2026-06-17T00:00:00+09:00"
         },
@@ -79,7 +78,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 14.93,
+          "value": 15.06,
           "formula": "price / eps_annualized"
         }
       }
@@ -120,7 +119,7 @@
   ],
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
-    "kioxia_per": 14.93,
+    "kioxia_per": 15.06,
     "sndk_per": 15.81
   },
   "timeseries": [
@@ -1062,16 +1061,16 @@
     {
       "date": "2026-06-17",
       "kioxia": {
-        "price": 94310.0,
+        "price": 96000.0,
         "eps_annualized": 6372.6,
-        "per": 14.8,
+        "per": 15.06,
         "eps_valid_from": "2026-05-16",
         "eps_event": null
       },
       "sndk": {
-        "price": null,
+        "price": 1991.55,
         "eps_annualized": 126.0,
-        "per": null,
+        "per": 15.81,
         "eps_valid_from": "2026-05-01",
         "eps_event": null
       }
