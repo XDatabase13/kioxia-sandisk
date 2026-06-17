@@ -212,7 +212,7 @@ footer {
   <h1>キオクシア vs サンディスク<br>予想PER 比較モニター</h1>
   <nav class="site-nav">
     <span class="site-nav-label">数理投資情報部の他の分析 ▶</span>
-    <a href="https://nav.xdbdb.com/">SBG 理論株価</a>
+    <a href="https://xdbdb.com/sbg-nav/">SBG 理論株価</a>
     <a href="https://xdbdb.com/crypto-nav/">暗号通貨 mNAV</a>
     <a href="https://xdbdb.com/">トップ</a>
   </nav>
@@ -352,7 +352,7 @@ footer {
 <footer>
   <nav class="site-nav" style="margin-bottom:16px;margin-top:0">
     <span class="site-nav-label">数理投資情報部の他の分析 ▶</span>
-    <a href="https://nav.xdbdb.com/">SBG 理論株価</a>
+    <a href="https://xdbdb.com/sbg-nav/">SBG 理論株価</a>
     <a href="https://xdbdb.com/crypto-nav/">暗号通貨 mNAV</a>
     <a href="https://xdbdb.com/">トップ</a>
   </nav>
@@ -479,7 +479,7 @@ footer {
       `<td class="tk">${esc(r.key.includes('kioxia') ? '285A.T' : 'SNDK')}</td>` +
       `<td class="num">${val}</td>` +
       `<td>${chgPct}</td>` +
-      `<td class="dt">${esc(m.as_of ? m.as_of.slice(0,10) : '—')}</td>` +
+      `<td class="dt">${m.as_of ? fmtDate(m.as_of) : '—'}</td>` +
       `<td><span class="${stCls}">${esc(m.status || '—')}</span></td>`;
     mktTbody.appendChild(tr);
   });
