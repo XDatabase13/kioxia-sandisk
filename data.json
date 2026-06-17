@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-06-17T22:28:33+09:00",
+    "generated_at": "2026-06-18T05:30:51+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -40,9 +40,9 @@
       "price_basis": "当日東京終値"
     },
     "sndk_price_usd": {
-      "value": 1991.55,
-      "as_of": "2026-06-16T13:00:00+09:00",
-      "change_pct": -5.5179,
+      "value": 1958.8,
+      "as_of": "2026-06-17T13:00:00+09:00",
+      "change_pct": -1.6445,
       "status": "ok",
       "source": "yfinance:SNDK",
       "market": "US",
@@ -101,9 +101,9 @@
       },
       "calc": {
         "price": {
-          "value": 1991.55,
+          "value": 1958.8,
           "currency": "USD",
-          "as_of": "2026-06-16T13:00:00+09:00"
+          "as_of": "2026-06-17T13:00:00+09:00"
         },
         "eps_annualized": {
           "value": 126.0,
@@ -111,7 +111,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 15.81,
+          "value": 15.55,
           "formula": "price / eps_annualized"
         }
       }
@@ -120,7 +120,7 @@
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
     "kioxia_per": 15.06,
-    "sndk_per": 15.81
+    "sndk_per": 15.55
   },
   "timeseries": [
     {
@@ -1071,6 +1071,23 @@
         "price": 1991.55,
         "eps_annualized": 126.0,
         "per": 15.81,
+        "eps_valid_from": "2026-05-01",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-06-18",
+      "kioxia": {
+        "price": 96000.0,
+        "eps_annualized": 6372.6,
+        "per": 15.06,
+        "eps_valid_from": "2026-05-16",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1958.8,
+        "eps_annualized": 126.0,
+        "per": 15.55,
         "eps_valid_from": "2026-05-01",
         "eps_event": null
       }
