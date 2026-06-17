@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>キオクシア vs サンディスク 予想PER比較 | xdbdb.com</title>
+<meta name="description" content="フラッシュメモリ専業2社（キオクシア・サンディスク）の予想PER（Non-GAAP Run-Rate）を毎日自動計算し、時系列で比較します。">
+<link rel="canonical" href="https://xdbdb.com/kioxia-sandisk/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:      #0a0e14;
+  --panel:   #121823;
+  --panel2:  #0e141d;
+  --line:    #1e2733;
+  --ink:     #e6edf3;
+  --sub:     #a8b3c0;
+  --dim:     #7c8a9c;
+  --accent:  #d4a548;
+  --green:   #3fb950;
+  --blue:    #58a6ff;
+  --orange:  #f0883e;
+  --red:     #f85149;
+  --kio:     #d4a548;   /* キオクシア = ゴールド */
+  --sndk:    #58a6ff;   /* SNDK = ブルー */
+  --ev-regular:  #3fb950;  /* 定期決算マーカー = グリーン */
+  --ev-revision: #f0883e;  /* 業績修正マーカー = オレンジ */
+  --mono:    'Roboto Mono', monospace;
+  --sans:    'Zen Kaku Gothic New', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap { max-width: 940px; margin: 0 auto; padding: 0 20px 64px; }
+
+/* ── Breadcrumb ─────────────────────────────── */
+.breadcrumb {
+  padding: 10px 0;
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 22px;
+}
+.breadcrumb a { color: var(--sub); }
+.breadcrumb .sep { margin: 0 6px; }
+
+/* ── Header ─────────────────────────────────── */
+header { padding: 8px 0 22px; border-bottom: 1px solid var(--line); }
+.kicker {
+  font-family: var(--mono); font-size: .68rem;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px;
+}
+h1 {
+  font-size: clamp(1.3rem, 4vw, 1.9rem);
+  font-weight: 900; letter-spacing: -.01em; line-height: 1.2;
+}
+.tagline { color: var(--sub); font-size: .88rem; margin-top: 10px; max-width: 600px; }
+.header-meta {
+  display: flex; flex-wrap: wrap; gap: 6px 20px;
+  margin-top: 14px;
+  font-family: var(--mono); font-size: .72rem; color: var(--dim);
+}
+.header-meta b { color: var(--sub); font-weight: 500; }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; font-family: var(--mono); }
+.site-nav-label { font-size: .72rem; font-weight: 700; color: var(--sub); margin-right: 4px; }
+.site-nav a {
+  font-size: .78rem; font-weight: 700;
+  color: var(--bg); background: var(--accent);
+  border: 1px solid var(--accent); border-radius: 6px;
+  padding: 5px 14px; text-decoration: none;
+}
+.site-nav a:hover { opacity: .85; }
+
+/* ── Alert banner ───────────────────────────── */
+.banner {
+  margin-top: 18px; padding: 10px 14px; border-radius: 8px;
+  font-size: .82rem; display: none;
+  background: rgba(248,81,73,.1); border: 1px solid rgba(248,81,73,.3); color: #ffb4b0;
+}
+.banner.warn { background: rgba(240,136,62,.1); border-color: rgba(240,136,62,.3); color: #ffd08a; }
+
+/* ── Section header ─────────────────────────── */
+.section { margin-top: 34px; }
+.section-title {
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 16px; font-weight: 700;
+}
+
+/* ── Hero cards ─────────────────────────────── */
+.hero {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+@media(max-width:640px) { .hero { grid-template-columns: 1fr; } }
+.hero-card {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 14px; padding: 22px 20px;
+}
+.hero-card.kio { border-color: rgba(212,165,72,.45); }
+.hero-card.sndk { border-color: rgba(88,166,255,.35); }
+.hero-ticker { font-family: var(--mono); font-size: .7rem; color: var(--dim); margin-bottom: 3px; }
+.hero-name { font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+.hero-per-label { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--sub); margin-bottom: 6px; }
+.hero-per {
+  font-family: var(--mono); font-size: 2.6rem;
+  font-weight: 700; letter-spacing: -.03em; line-height: 1;
+}
+.hero-per.kio  { color: var(--kio); }
+.hero-per.sndk { color: var(--sndk); }
+.hero-sub { margin-top: 10px; font-family: var(--mono); font-size: .76rem; color: var(--sub); line-height: 2; }
+.hero-sub span { color: var(--ink); }
+.hero-eps-basis { margin-top: 10px; font-size: .72rem; color: var(--dim); }
+.hero-vs {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 1rem; font-weight: 700; color: var(--dim);
+}
+
+/* ── Chart ──────────────────────────────────── */
+.chart-note { font-size: .78rem; color: var(--sub); margin-bottom: 12px; line-height: 1.75; }
+.chart-wrap {
+  background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 12px; padding: 20px 20px 14px;
+  position: relative;
+}
+.chart-canvas-wrap { position: relative; height: 400px; }
+@media(max-width:640px) { .chart-canvas-wrap { height: 280px; } }
+
+/* ── EPS Events table ───────────────────────── */
+.ev-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin-top: 14px; }
+.ev-table th, .ev-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.ev-table th { font-family: var(--mono); font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); font-weight: 500; }
+.ev-table tr:last-child td { border-bottom: none; }
+.ev-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; flex-shrink: 0; }
+.ev-dot.regular  { background: var(--ev-regular); }
+.ev-dot.revision { background: var(--ev-revision); }
+.ev-badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono); font-size: .65rem;
+  border-radius: 4px; padding: 2px 8px;
+}
+.ev-badge.kio  { background: rgba(212,165,72,.14); color: var(--kio); border: 1px solid rgba(212,165,72,.35); }
+.ev-badge.sndk { background: rgba(88,166,255,.12); color: var(--sndk); border: 1px solid rgba(88,166,255,.3); }
+.ev-eps-arrow { font-family: var(--mono); font-size: .78rem; color: var(--sub); }
+.ev-eps-val { color: var(--ink); font-weight: 600; }
+
+/* ── Market table ───────────────────────────── */
+.mkt-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.mkt-table th, .mkt-table td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.mkt-table th:first-child, .mkt-table td:first-child { text-align: left; }
+.mkt-table th { font-family: var(--mono); font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); font-weight: 500; }
+.mkt-table td.tk { font-family: var(--mono); color: var(--sub); font-size: .78rem; }
+.mkt-table td.num { font-family: var(--mono); font-weight: 500; }
+.mkt-table td.dt { font-family: var(--mono); color: var(--dim); font-size: .76rem; }
+.st-ok { color: var(--green); } .st-stale { color: var(--accent); } .st-failed { color: var(--red); }
+
+/* ── Disclaimer ─────────────────────────────── */
+.disclaimer {
+  margin-top: 14px; padding: 18px 20px;
+  background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 12px; font-size: .78rem; color: var(--sub); line-height: 1.9;
+}
+.disclaimer-title {
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--dim); margin-bottom: 12px;
+}
+.disclaimer li { margin-left: 1.4em; margin-top: 6px; }
+
+/* ── Footer ─────────────────────────────────── */
+footer {
+  margin-top: 44px; padding: 22px 0 40px;
+  border-top: 1px solid var(--line);
+  font-size: .76rem; color: var(--dim); line-height: 1.85;
+}
+.footer-disclaimer {
+  background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px 16px;
+  margin-bottom: 14px; color: var(--sub); font-size: .78rem;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb">
+  <a href="https://xdbdb.com">xdbdb.com</a>
+  <span class="sep">/</span>
+  <span>キオクシア vs サンディスク 予想PER比較</span>
+</nav>
+
+<!-- Header -->
+<header>
+  <div class="kicker">数理投資情報部 第3号 — NAND Flash PER Monitor</div>
+  <h1>キオクシア vs サンディスク<br>予想PER 比較モニター</h1>
+  <nav class="site-nav">
+    <span class="site-nav-label">数理投資情報部の他の分析 ▶</span>
+    <a href="https://nav.xdbdb.com/">SBG 理論株価</a>
+    <a href="https://xdbdb.com/crypto-nav/">暗号通貨 mNAV</a>
+    <a href="https://xdbdb.com/">トップ</a>
+  </nav>
+  <p class="tagline">フラッシュメモリ専業2社が同じ工場を共有しながら、なぜPERが乖離するのか。毎日更新の時系列で見る。</p>
+  <div class="header-meta">
+    <span><b>最終更新:</b> <span id="gen-at">—</span></span>
+    <span><b>グラフ起点:</b> 2026年4月1日</span>
+    <span><b>EPS基準:</b> Non-GAAP 次Q予想 × 4（Run-Rate）</span>
+  </div>
+</header>
+
+<!-- Alert banner -->
+<div id="banner" class="banner"></div>
+
+<!-- Hero: current PER -->
+<div class="hero">
+  <div class="hero-card kio">
+    <div class="hero-ticker">東証: 285A.T</div>
+    <div class="hero-name">キオクシアホールディングス</div>
+    <div class="hero-per-label">予想PER（Run-Rate）</div>
+    <div class="hero-per kio" id="kio-per">—</div>
+    <div class="hero-sub">
+      株価（円）: <span id="kio-price">—</span><br>
+      EPS年率（円）: <span id="kio-eps">—</span>
+    </div>
+    <div class="hero-eps-basis" id="kio-basis">—</div>
+  </div>
+
+  <div class="hero-vs">vs</div>
+
+  <div class="hero-card sndk">
+    <div class="hero-ticker">NASDAQ: SNDK</div>
+    <div class="hero-name">サンディスク</div>
+    <div class="hero-per-label">予想PER（Run-Rate）</div>
+    <div class="hero-per sndk" id="sndk-per">—</div>
+    <div class="hero-sub">
+      株価（USD）: <span id="sndk-price">—</span><br>
+      EPS年率（USD）: <span id="sndk-eps">—</span>
+    </div>
+    <div class="hero-eps-basis" id="sndk-basis">—</div>
+  </div>
+</div>
+
+<!-- Main chart -->
+<div class="section">
+  <div class="section-title">予想PER 推移 / Forward PER Trend</div>
+  <p class="chart-note">
+    縦の破線はEPS切替日。線はセグメントで分断され段差をそのまま表示（EPS増加→PER急落は正直に見せる）。
+    <span style="color:var(--ev-regular)">●</span> 定期決算 &nbsp;
+    <span style="color:var(--ev-revision)">●</span> 業績修正
+  </p>
+  <div class="chart-wrap">
+    <div class="chart-canvas-wrap">
+      <canvas id="per-chart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- EPS Events -->
+<div class="section">
+  <div class="section-title">EPS 切替イベント</div>
+  <table class="ev-table" id="ev-table">
+    <thead>
+      <tr>
+        <th>適用日</th>
+        <th>銘柄</th>
+        <th>種別</th>
+        <th>EPS変化（年率）</th>
+        <th>出所</th>
+      </tr>
+    </thead>
+    <tbody id="ev-tbody"></tbody>
+  </table>
+</div>
+
+<!-- Market data -->
+<div class="section">
+  <div class="section-title">最新市場データ / Market Snapshot</div>
+  <table class="mkt-table">
+    <thead>
+      <tr>
+        <th>銘柄</th>
+        <th>ティッカー</th>
+        <th>終値</th>
+        <th>前日比</th>
+        <th>基準時刻</th>
+        <th>状態</th>
+      </tr>
+    </thead>
+    <tbody id="mkt-tbody"></tbody>
+  </table>
+</div>
+
+<!-- Disclaimer -->
+<div class="section">
+  <div class="section-title">計算方法と注記 / Methodology &amp; Disclaimer</div>
+  <div class="disclaimer">
+    <div class="disclaimer-title">予想PERの算出方法</div>
+    <ul>
+      <li>
+        <b>PER計算式：</b>当日終値 ÷ Non-GAAP 次Q予想EPS年率。
+        EPS年率 ＝ 次の四半期ガイダンス中央値 × 4（Run-Rate）。
+      </li>
+      <li>
+        <b>Run-Rate PERの特性：</b>現在の収益水準が1年継続すると仮定した倍率のため、
+        証券会社が表示するアナリスト通期コンセンサスベースの予想PERより
+        <b>低く出る傾向</b>があります（特に急成長局面）。
+        参考: 2026/6/17時点の検証値 — キオクシア約14.9倍（SBI 13.53倍と近似）、SNDK約16.7倍。
+      </li>
+      <li>
+        <b>EPS基準の非対称性：</b>キオクシアはNon-GAAP <b>基本的（basic）EPS</b>、
+        サンディスクはNon-GAAP <b>希薄化後（diluted）EPS</b>を使用。
+        キオクシアはdiluted予想を会社が開示しないためbasicで統一。
+        希薄化率は約1.5%と小さく、影響は軽微です。
+      </li>
+      <li>
+        <b>キオクシア2026/5/15以前：</b>ガイダンスがレンジ形式（上限・下限）で開示されているため、
+        中央値（low+high÷2）を採用しています。
+      </li>
+      <li>
+        <b>グラフの段差：</b>EPS切替日で線を分断し、段差をそのまま表示します。
+        EPS増加によるPER急落を「暴落」と誤認させないための処理です（第1号・第2号と同じ思想）。
+      </li>
+      <li>
+        <b>時点整合：</b>日米市場の1日時差は許容。EPS更新は開示翌営業日から適用。
+        過去の時系列データは遡及修正しません（書き込み時の計算値で確定）。
+      </li>
+      <li>
+        <b>データ取得：</b>株価はyfinance（Yahoo Finance）から日次自動取得。
+        EPSは会社発表（一次情報）を人手で更新。
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <nav class="site-nav" style="margin-bottom:16px;margin-top:0">
+    <span class="site-nav-label">数理投資情報部の他の分析 ▶</span>
+    <a href="https://nav.xdbdb.com/">SBG 理論株価</a>
+    <a href="https://xdbdb.com/crypto-nav/">暗号通貨 mNAV</a>
+    <a href="https://xdbdb.com/">トップ</a>
+  </nav>
+  <div class="footer-disclaimer">
+    本サイトは公開データに基づく数理的な試算です。投資勧誘・投資助言を目的とするものではありません。
+    掲載値の正確性・完全性を保証するものではなく、投資判断はご自身の責任で行ってください。
+  </div>
+  <div>
+    データ源: 株価 = Yahoo Finance (yfinance) &nbsp;/&nbsp;
+    EPS = キオクシア決算短信・SNDK決算資料（会社一次情報） &nbsp;/&nbsp;
+    日次自動更新（毎朝）<br>
+    <a href="https://xdbdb.com">← xdbdb.com トップへ</a>
+  </div>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+(async () => {
+  // ── ユーティリティ ──────────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  const esc = s => s == null ? '' : String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  function fmtNum(v, dec = 2, prefix = '') {
+    if (v == null) return '—';
+    return prefix + Number(v).toLocaleString('ja-JP', {
+      minimumFractionDigits: dec, maximumFractionDigits: dec,
+    });
+  }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    try {
+      return new Date(iso).toLocaleString('ja-JP', {
+        timeZone: 'Asia/Tokyo',
+        year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit',
+      }) + ' JST';
+    } catch { return iso; }
+  }
+  function fmtMD(dateStr) {
+    if (!dateStr) return '—';
+    const p = dateStr.split('-');
+    return `${parseInt(p[1])}/${parseInt(p[2])}`;
+  }
+  function chgClass(v) { return v == null ? '' : v >= 0 ? 'st-ok' : 'st-failed'; }
+
+  // ── データ取得 ────────────────────────────────────────────────────────────
+  let data, epsCfg;
+  try {
+    [data, epsCfg] = await Promise.all([
+      fetch('data.json?_=' + Date.now()).then(r => r.json()),
+      fetch('eps_config.json?_=' + Date.now()).then(r => r.json()).catch(() => null),
+    ]);
+  } catch (e) {
+    $('banner').style.display = 'block';
+    $('banner').textContent = 'データを読み込めませんでした。ページを再読み込みしてください。';
+    return;
+  }
+
+  const meta   = data._meta || {};
+  const mktDat = data.market_data || {};
+  const cos    = data.companies || [];
+  const ts     = data.timeseries || [];
+  const overall = meta.overall_status || 'init';
+
+  // ── バナー ───────────────────────────────────────────────────────────────
+  if (overall !== 'complete') {
+    const b = $('banner');
+    b.style.display = 'block';
+    b.className = 'banner ' + (overall === 'failed' ? '' : 'warn');
+    const msgs = (data.alerts?.messages || []).join(' / ') || `ステータス: ${overall}`;
+    b.textContent = overall === 'failed'
+      ? '⛔ ' + msgs
+      : '⚠ 一部の市場データを取得できませんでした。' + (msgs ? ' ' + msgs : '');
+  }
+
+  // ── ヘッダー ─────────────────────────────────────────────────────────────
+  $('gen-at').textContent = fmtDate(meta.generated_at);
+
+  // ── Hero カード ───────────────────────────────────────────────────────────
+  const kio  = cos.find(c => c.id === 'kioxia') || {};
+  const sndk = cos.find(c => c.id === 'sndk')   || {};
+
+  function fillHero(company, perEl, priceEl, epsEl, basisEl) {
+    const per   = company.calc?.per?.value;
+    const price = company.calc?.price?.value;
+    const eps   = company.calc?.eps_annualized?.value;
+    const eps_c = company.eps_current || {};
+
+    perEl.textContent   = per   != null ? per.toFixed(2) + '倍' : '—';
+    priceEl.textContent = price != null
+      ? (company.base_currency === 'JPY' ? '¥' : '$') + fmtNum(price, company.base_currency === 'JPY' ? 0 : 2)
+      : '—';
+    epsEl.textContent   = eps   != null
+      ? (company.base_currency === 'JPY' ? '¥' : '$') + fmtNum(eps, company.base_currency === 'JPY' ? 2 : 2)
+      : '—';
+
+    const fmt = eps_c.guidance_format === 'range' ? 'レンジ中央値' : '単一値';
+    basisEl.textContent = eps_c.basis
+      ? `${eps_c.basis === 'non_gaap_basic' ? 'Non-GAAP basic' : 'Non-GAAP diluted'} / ${fmt} / valid_from: ${eps_c.valid_from || '—'}`
+      : '—';
+  }
+
+  fillHero(kio,  $('kio-per'),  $('kio-price'),  $('kio-eps'),  $('kio-basis'));
+  fillHero(sndk, $('sndk-per'), $('sndk-price'), $('sndk-eps'), $('sndk-basis'));
+
+  // ── Market table ──────────────────────────────────────────────────────────
+  const mktRows = [
+    { key: 'kioxia_price_jpy', name: 'キオクシア (285A.T)', prefix: '¥', dec: 0 },
+    { key: 'sndk_price_usd',   name: 'サンディスク (SNDK)', prefix: '$', dec: 2 },
+  ];
+  const mktTbody = $('mkt-tbody');
+  mktRows.forEach(r => {
+    const m = mktDat[r.key] || {};
+    const val    = m.value  != null ? r.prefix + fmtNum(m.value, r.dec) : '—';
+    const chgPct = m.change_pct != null
+      ? `<span class="${chgClass(m.change_pct)}">${m.change_pct >= 0 ? '+' : ''}${m.change_pct.toFixed(2)}%</span>`
+      : '—';
+    const stCls = `st-${m.status || 'ok'}`;
+    const tr = document.createElement('tr');
+    tr.innerHTML =
+      `<td>${esc(r.name)}</td>` +
+      `<td class="tk">${esc(r.key.includes('kioxia') ? '285A.T' : 'SNDK')}</td>` +
+      `<td class="num">${val}</td>` +
+      `<td>${chgPct}</td>` +
+      `<td class="dt">${esc(m.as_of ? m.as_of.slice(0,10) : '—')}</td>` +
+      `<td><span class="${stCls}">${esc(m.status || '—')}</span></td>`;
+    mktTbody.appendChild(tr);
+  });
+
+  // ── EPSイベント収集 ───────────────────────────────────────────────────────
+  // timeseries から eps_event を収集し、eps_config.json と突合して出所を付与する
+  const epsHistMap = {};
+  if (epsCfg) {
+    ['kioxia', 'sndk'].forEach(id => {
+      const hist = epsCfg.companies?.[id]?.eps_history || [];
+      epsHistMap[id] = hist; // valid_from → entry
+    });
+  }
+
+  function lookupEpsCfg(companyId, validFrom) {
+    const hist = epsHistMap[companyId] || [];
+    return hist.find(e => e.valid_from === validFrom) || null;
+  }
+
+  const epsEvents = []; // { date, company, type, epsNewAnn, epsPrevAnn, validFrom, srcLabel, srcUrl }
+  const prevEps = { kioxia: null, sndk: null };
+
+  for (const entry of ts) {
+    ['kioxia', 'sndk'].forEach(id => {
+      const co = entry[id] || {};
+      if (co.eps_event) {
+        const cfgEntry = lookupEpsCfg(id, co.eps_valid_from);
+        epsEvents.push({
+          date:       entry.date,
+          company:    id,
+          type:       co.eps_event,
+          epsNewAnn:  co.eps_annualized,
+          epsPrevAnn: prevEps[id],
+          validFrom:  co.eps_valid_from,
+          srcLabel:   cfgEntry?.source_label || '—',
+          srcUrl:     cfgEntry?.source_url   || null,
+        });
+      }
+      if (co.eps_annualized != null) prevEps[id] = co.eps_annualized;
+    });
+  }
+
+  // ── EPS Events table ──────────────────────────────────────────────────────
+  const evTbody = $('ev-tbody');
+  if (epsEvents.length === 0) {
+    evTbody.innerHTML = '<tr><td colspan="5" style="color:var(--dim);text-align:center">記録なし（初回エントリのみ）</td></tr>';
+  } else {
+    epsEvents.forEach(ev => {
+      const badgeCls = ev.company === 'kioxia' ? 'kio' : 'sndk';
+      const dotCls   = ev.type === 'regular_earnings' ? 'regular' : 'revision';
+      const typeLabel = ev.type === 'regular_earnings' ? '定期決算' : '業績修正';
+      const currency  = ev.company === 'kioxia' ? '¥' : '$';
+      const dec       = ev.company === 'kioxia' ? 2 : 2;
+      const coLabel   = ev.company === 'kioxia' ? 'キオクシア' : 'SNDK';
+      const srcHtml   = ev.srcUrl
+        ? `<a href="${esc(ev.srcUrl)}" target="_blank" rel="noopener">${esc(ev.srcLabel)}</a>`
+        : esc(ev.srcLabel);
+      const prevStr = ev.epsPrevAnn != null ? fmtNum(ev.epsPrevAnn, dec, currency) : '—';
+      const newStr  = ev.epsNewAnn  != null ? fmtNum(ev.epsNewAnn,  dec, currency) : '—';
+
+      const tr = document.createElement('tr');
+      tr.innerHTML =
+        `<td><span style="font-family:var(--mono)">${esc(ev.date)}</span></td>` +
+        `<td><span class="ev-badge ${badgeCls}">${esc(coLabel)}</span></td>` +
+        `<td><span class="ev-dot ${dotCls}"></span>${esc(typeLabel)}</td>` +
+        `<td class="ev-eps-arrow">` +
+          `<span class="ev-eps-val">${prevStr}</span> → <span class="ev-eps-val">${newStr}</span>` +
+          ` <span style="color:var(--dim);font-size:.7rem">/年率</span>` +
+        `</td>` +
+        `<td style="font-size:.76rem">${srcHtml}</td>`;
+      evTbody.appendChild(tr);
+    });
+  }
+
+  // ── Chart.js ─────────────────────────────────────────────────────────────
+  if (ts.length === 0 || typeof Chart === 'undefined') return;
+
+  const allDates = ts.map(e => e.date);
+
+  // ── セグメント分割 ────────────────────────────────────────────────────────
+  // EPS切替日で線を分断する：各セグメントは独立したChart.jsデータセットになる
+  function buildSegmentDatasets(companyId, color, displayName) {
+    const segments = []; // [{startIdx, endIdx, validFrom}]
+    let curVf = null;
+
+    for (let i = 0; i < ts.length; i++) {
+      const co = ts[i][companyId] || {};
+      const vf = co.eps_valid_from;
+      if (vf !== curVf) {
+        if (curVf !== null) segments[segments.length - 1].endIdx = i - 1;
+        segments.push({ startIdx: i, endIdx: ts.length - 1, validFrom: vf });
+        curVf = vf;
+      }
+    }
+
+    // 最終セグメントは ts.length-1 まで
+    return segments.map((seg, i) => {
+      const data = allDates.map((_, j) => {
+        if (j < seg.startIdx || j > seg.endIdx) return null;
+        return ts[j][companyId]?.per ?? null;
+      });
+      return {
+        label: i === 0 ? displayName : `_${displayName}_${i}`,
+        data,
+        borderColor:     color,
+        backgroundColor: 'transparent',
+        borderWidth: 2.2,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        tension: 0.15,
+        spanGaps: true,  // 祝日の null は繋ぐ（EPS 切替断絶は別データセット方式で保証）
+      };
+    });
+  }
+
+  const kioDatasets  = buildSegmentDatasets('kioxia', '#d4a548', 'キオクシア (285A.T)');
+  const sndkDatasets = buildSegmentDatasets('sndk',   '#58a6ff', 'サンディスク (SNDK)');
+  const allDatasets  = [...kioDatasets, ...sndkDatasets];
+
+  // ── EPS切替マーカープラグイン ──────────────────────────────────────────────
+  // eps_event の日に縦の破線 + 三角マーカーを描画
+  const epsMarkerPlugin = {
+    id: 'epsMarkers',
+    afterDatasetsDraw(chart) {
+      const ctx    = chart.ctx;
+      const xScale = chart.scales.x;
+      const yScale = chart.scales.y;
+      if (!xScale || !yScale) return;
+
+      epsEvents.forEach(ev => {
+        const idx = allDates.indexOf(ev.date);
+        if (idx < 0) return;
+
+        const x      = xScale.getPixelForValue(idx);
+        const yTop   = yScale.top;
+        const yBot   = yScale.bottom;
+        const color  = ev.type === 'regular_earnings' ? '#3fb950' : '#f0883e';
+
+        ctx.save();
+
+        // 縦の破線
+        ctx.strokeStyle = color;
+        ctx.lineWidth   = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.globalAlpha = 0.75;
+        ctx.beginPath();
+        ctx.moveTo(x, yTop + 12);
+        ctx.lineTo(x, yBot);
+        ctx.stroke();
+
+        // 三角マーカー（上部）
+        ctx.setLineDash([]);
+        ctx.fillStyle   = color;
+        ctx.globalAlpha = 0.9;
+        ctx.beginPath();
+        ctx.moveTo(x, yTop + 11);
+        ctx.lineTo(x - 6, yTop + 2);
+        ctx.lineTo(x + 6, yTop + 2);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+      });
+    },
+  };
+
+  // ── チャート ──────────────────────────────────────────────────────────────
+  new Chart($('per-chart'), {
+    type: 'line',
+    plugins: [epsMarkerPlugin],
+    data: { labels: allDates, datasets: allDatasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            color: '#a8b3c0',
+            font: { family: "'Roboto Mono', monospace", size: 11 },
+            usePointStyle: true,
+            pointStyleWidth: 18,
+            padding: 20,
+            filter: item => !item.text.startsWith('_'),
+          },
+        },
+        tooltip: {
+          backgroundColor: '#0e141d',
+          borderColor:     '#1e2733',
+          borderWidth:     1,
+          titleColor:      '#e6edf3',
+          titleFont:       { family: "'Roboto Mono', monospace", size: 11, weight: '700' },
+          bodyColor:       '#a8b3c0',
+          bodyFont:        { family: "'Roboto Mono', monospace", size: 11 },
+          footerColor:     '#7c8a9c',
+          footerFont:      { family: "'Roboto Mono', monospace", size: 10 },
+          padding: 12,
+          callbacks: {
+            title(items) {
+              const dateStr = allDates[items[0]?.dataIndex];
+              return dateStr || '';
+            },
+            label(item) {
+              if (item.raw == null) return null; // null データポイントはtooltipに出さない
+              // "_キオクシア (285A.T)_1" → "キオクシア (285A.T)"（セグメント2以降の表示名を復元）
+              const rawLabel = item.dataset.label;
+              const displayLabel = rawLabel.startsWith('_')
+                ? rawLabel.replace(/^_/, '').replace(/_\d+$/, '')
+                : rawLabel;
+              return `  ${displayLabel}: ${item.raw.toFixed(2)}倍`;
+            },
+            afterBody(items) {
+              const idx     = items[0]?.dataIndex;
+              const dateStr = allDates[idx];
+              if (!dateStr) return [];
+
+              const lines = [];
+              const dayEvents = epsEvents.filter(e => e.date === dateStr);
+              dayEvents.forEach(ev => {
+                const coLabel  = ev.company === 'kioxia' ? 'キオクシア' : 'SNDK';
+                const currency = ev.company === 'kioxia' ? '¥' : '$';
+                const typeLabel = ev.type === 'regular_earnings' ? '[定期決算]' : '[業績修正]';
+                lines.push('');
+                lines.push(`${typeLabel} EPS切替 — ${coLabel}`);
+                if (ev.epsPrevAnn != null && ev.epsNewAnn != null) {
+                  lines.push(`  年率EPS: ${currency}${ev.epsPrevAnn.toLocaleString('ja-JP')} → ${currency}${ev.epsNewAnn.toLocaleString('ja-JP')}`);
+                }
+                lines.push(`  出所: ${ev.srcLabel}`);
+              });
+              return lines;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { color: '#1e2733' },
+          ticks: {
+            color: '#7c8a9c',
+            font:  { family: "'Roboto Mono', monospace", size: 10 },
+            maxTicksLimit: 12,
+            maxRotation: 0,
+            autoSkip: true,
+            callback(val) {
+              const s = allDates[val];
+              if (!s) return '';
+              return fmtMD(s);
+            },
+          },
+        },
+        y: {
+          grid: { color: '#1e2733' },
+          suggestedMin: 5,
+          ticks: {
+            color: '#7c8a9c',
+            font:  { family: "'Roboto Mono', monospace", size: 10 },
+            callback: v => v.toFixed(0) + '倍',
+          },
+        },
+      },
+    },
+  });
+
+})();
+</script>
+</body>
+</html>

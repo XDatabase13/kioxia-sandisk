@@ -1,0 +1,93 @@
+{
+  "_meta": {
+    "description": "キオクシア×サンディスク EPS時点別有効値テーブル。決算・業績修正の都度、人手で末尾追記のみ。遡及書き換え禁止。",
+    "eps_basis": {
+      "kioxia": "Non-GAAP（調整後）基本的（basic）次Q予想EPS × 4（Run-Rate年率化）。diluted予想は会社非開示のためbasicで統一。",
+      "sndk": "Non-GAAP diluted 次Q予想EPSガイダンス × 4（Run-Rate年率化）。"
+    },
+    "update_rule": "発表翌営業日を valid_from とする。4/1起点エントリは起点より前に発表済みのガイダンスを4/1から有効として投入する特例。過去エントリの値は一切書き換えない。新しいエントリを末尾に追加するのみ。",
+    "per_formula": "price ÷ eps_annualized（EPS ÷ price は益回りであり PER ではない）",
+    "eps_resolution": "バッチは各日付に対し『valid_from <= 当日』を満たす最新エントリを解決してPERを計算する。",
+    "type_vocabulary": {
+      "regular_earnings": "定期四半期決算（年4回）",
+      "guidance_revision": "業績修正（随時）"
+    },
+    "guidance_format_vocabulary": {
+      "range": "上限・下限レンジで開示。eps_quarterly は (low + high) / 2 の中央値を採用。",
+      "point": "単一値で開示。eps_quarterly_low / high は null。"
+    },
+    "basis_vocabulary": {
+      "non_gaap_basic": "Non-GAAP 基本的（basic）EPS。キオクシアはdiluted予想を会社が開示しないためbasicで統一。希薄化率は約1.5%と小さく安定。",
+      "non_gaap_diluted": "Non-GAAP 希薄化後（diluted）EPS。サンディスクはdilutedガイダンスを開示。"
+    },
+    "disclaimer_addition": "キオクシアの2026/5/15以前の予想EPSはレンジ形式ガイダンスの中央値を使用。またキオクシアはbasic、サンディスクはdiluted EPSを使用（希薄化率は小さく影響軽微）。"
+  },
+  "companies": {
+    "kioxia": {
+      "ticker": "285A.T",
+      "display_name": "キオクシアホールディングス",
+      "base_currency": "JPY",
+      "eps_history": [
+        {
+          "valid_from": "2026-04-01",
+          "guidance_format": "range",
+          "eps_quarterly_low": 569.36,
+          "eps_quarterly_high": 679.56,
+          "eps_quarterly": 624.46,
+          "eps_annualized": 2497.84,
+          "type": "regular_earnings",
+          "source_label": "2026/2/12 Q3決算 Q4見通し(レンジ)",
+          "source_url": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260212/20260212556330.pdf",
+          "basis": "non_gaap_basic",
+          "note": "グラフ起点(2026/4/1)への初期投入値。実際の開示日は2026/2/12（起点より前）。4/1〜5/15の間はこのEPSが有効。"
+        },
+        {
+          "valid_from": "2026-05-16",
+          "guidance_format": "point",
+          "eps_quarterly_low": null,
+          "eps_quarterly_high": null,
+          "eps_quarterly": 1593.15,
+          "eps_annualized": 6372.60,
+          "type": "regular_earnings",
+          "source_label": "2026/5/15 本決算 FY27Q1見通し",
+          "source_url": "https://tdnet-pdf.kabutan.jp/20260515/140120260515537803.pdf",
+          "basis": "non_gaap_basic",
+          "note": "2026/5/15決算発表翌日(5/16)から有効。"
+        }
+      ]
+    },
+    "sndk": {
+      "ticker": "SNDK",
+      "display_name": "サンディスク",
+      "base_currency": "USD",
+      "eps_history": [
+        {
+          "valid_from": "2026-04-01",
+          "guidance_format": "range",
+          "eps_quarterly_low": 12.00,
+          "eps_quarterly_high": 14.00,
+          "eps_quarterly": 13.00,
+          "eps_annualized": 52.00,
+          "type": "regular_earnings",
+          "source_label": "2026/1/29 Q2決算 Q3見通し",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0002023554/000162828026004121/sndkq2fy26ex991-pressrelea.htm",
+          "basis": "non_gaap_diluted",
+          "note": "グラフ起点(2026/4/1)への初期投入値。実際の開示日は2026/1/29（起点より前）。4/1〜4/30の間はこのEPSが有効。"
+        },
+        {
+          "valid_from": "2026-05-01",
+          "guidance_format": "range",
+          "eps_quarterly_low": 30.00,
+          "eps_quarterly_high": 33.00,
+          "eps_quarterly": 31.50,
+          "eps_annualized": 126.00,
+          "type": "regular_earnings",
+          "source_label": "2026/4/30 Q3決算 Q4見通し",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/0002023554/000162828026028879/sndkq3-26ex991xpressrelease.htm",
+          "basis": "non_gaap_diluted",
+          "note": "2026/4/30決算発表翌日(5/1)から有効。"
+        }
+      ]
+    }
+  }
+}
