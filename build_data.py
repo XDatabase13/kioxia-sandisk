@@ -27,6 +27,10 @@ except AttributeError:
 SCRIPT_DIR      = Path(__file__).parent
 EPS_CONFIG_PATH = SCRIPT_DIR / "eps_config.json"
 DATA_PATH       = SCRIPT_DIR / "data.json"
+INDEX_PATH      = SCRIPT_DIR / "index.html"
+
+SUMMARY_START = "<!-- STATIC_SUMMARY_START -->"
+SUMMARY_END   = "<!-- STATIC_SUMMARY_END -->"
 
 JST          = timezone(timedelta(hours=9))
 GRAPH_START  = date(2026, 4, 1)   # このより前のエントリは生成しない
@@ -63,6 +67,67 @@ def load_json(path: Path) -> dict:
 def save_json(path: Path, data: dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+# =========================================================================
+# index.html 静的サマリー更新
+# =========================================================================
+
+def update_html_summary(
+    today_str: str,
+    k_per: float | None,
+    s_per: float | None,
+    timeseries: list,
+) -> None:
+    """index.html の STATIC_SUMMARY ブロックを最新値で書き換える。"""
+    if not INDEX_PATH.exists():
+        print("[WARN] index.html が見つかりません。静的サマリー更新をスキップ。")
+        return
+
+    k_pers = [e["kioxia"]["per"] for e in timeseries if (e.get("kioxia") or {}).get("per") is not None]
+    s_pers = [e["sndk"]["per"]   for e in timeseries if (e.get("sndk")   or {}).get("per") is not None]
+
+    k_str = f"{k_per:.2f}倍" if k_per is not None else "取得中"
+    s_str = f"{s_per:.2f}倍" if s_per is not None else "取得中"
+
+    cheaper = ""
+    if k_per is not None and s_per is not None:
+        diff = abs(k_per - s_per)
+        if k_per < s_per:
+            cheaper = f"現時点ではキオクシアの方が割安（PER差 {diff:.2f}倍）。"
+        elif s_per < k_per:
+            cheaper = f"現時点ではサンディスクの方が割安（PER差 {diff:.2f}倍）。"
+        else:
+            cheaper = "現時点では両社のPERは同値。"
+
+    range_line = ""
+    if k_pers and s_pers:
+        range_line = (
+            f"\n  <p>2026年4月以降の推移："
+            f"キオクシアPERは{min(k_pers):.2f}〜{max(k_pers):.2f}倍、"
+            f"サンディスクPERは{min(s_pers):.2f}〜{max(s_pers):.2f}倍の範囲で推移している。</p>"
+        )
+
+    new_block = (
+        f"{SUMMARY_START}\n"
+        f"<div class=\"static-summary\">\n"
+        f"  <p><b>{today_str} 時点の予想PER（Run-Rate）：</b>"
+        f"キオクシア {k_str}、サンディスク {s_str}。{cheaper}</p>"
+        f"{range_line}\n"
+        f"</div>\n"
+        f"{SUMMARY_END}"
+    )
+
+    html = INDEX_PATH.read_text(encoding="utf-8")
+    start_idx = html.find(SUMMARY_START)
+    end_idx   = html.find(SUMMARY_END)
+    if start_idx == -1 or end_idx == -1:
+        print("[WARN] STATIC_SUMMARY マーカーが index.html に見つかりません。スキップ。")
+        return
+
+    new_html = html[:start_idx] + new_block + html[end_idx + len(SUMMARY_END):]
+    INDEX_PATH.write_text(new_html, encoding="utf-8")
+    print(f"[OK] index.html 静的サマリーを更新しました（{today_str}）。")
 
 
 # =========================================================================
@@ -420,6 +485,9 @@ def build_data() -> None:
     }
 
     save_json(DATA_PATH, output)
+
+    # index.html の静的サマリーを更新
+    update_html_summary(today_str, k_per, s_per, prev_timeseries + [ts_entry])
 
     label = {"complete": "OK", "partial": "WARN"}.get(overall_status, overall_status)
     print(f"\n[{label}] data.json 書き出し完了  overall_status={overall_status}  date={today_str}")

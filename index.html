@@ -85,6 +85,24 @@ h1 {
 }
 .site-nav a:hover { opacity: .85; }
 
+/* ── About section ─────────────────────────── */
+.about-section {
+  margin-top: 22px; padding: 18px 20px;
+  background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 12px; font-size: .86rem;
+  color: var(--sub); line-height: 1.9;
+}
+
+/* ── Static summary ─────────────────────────── */
+.static-summary {
+  margin-top: 18px; padding: 14px 18px;
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; font-size: .84rem;
+  color: var(--sub); line-height: 1.85;
+}
+.static-summary p + p { margin-top: 6px; }
+.static-summary b { color: var(--ink); }
+
 /* ── Alert banner ───────────────────────────── */
 .banner {
   margin-top: 18px; padding: 10px 14px; border-radius: 8px;
@@ -224,6 +242,11 @@ footer {
   </div>
 </header>
 
+<!-- Static explanation -->
+<section class="about-section">
+  キオクシアホールディングス（東証:285A.T）とサンディスク（NASDAQ:SNDK）は、NANDフラッシュメモリ市場を二分する専業2社だ。四日市・北上の製造工場を合弁で共同運営しており、製造コストも市況もほぼ連動している。それでも株式市場が両社に付ける予想PERは乖離し、時に逆転する。本モニターはその歪みを毎日可視化するため、Non-GAAP次Q予想EPS（ガイダンス中央値）を4倍して年率化するRun-Rate方式で予想PERを自動算出している。アナリスト通期コンセンサスではなく会社一次情報（Non-GAAP決算発表値）を使い、EPS切替日を明示することで数値の段差を正直に見せる。2026年4月以降の時系列を両社並べて公開している。
+</section>
+
 <!-- Alert banner -->
 <div id="banner" class="banner"></div>
 
@@ -255,6 +278,13 @@ footer {
     <div class="hero-eps-basis" id="sndk-basis">—</div>
   </div>
 </div>
+
+<!-- STATIC_SUMMARY_START -->
+<div class="static-summary">
+  <p><b>2026-06-17 時点の予想PER（Run-Rate）：</b>キオクシア 15.06倍、サンディスク 15.81倍。現時点ではキオクシアの方が割安（PER差 0.75倍）。</p>
+  <p>2026年4月以降の推移：キオクシアPERは7.81〜20.22倍、サンディスクPERは9.42〜21.09倍の範囲で推移している。</p>
+</div>
+<!-- STATIC_SUMMARY_END -->
 
 <!-- Main chart -->
 <div class="section">
