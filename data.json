@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-06-19T05:30:52+09:00",
+    "generated_at": "2026-06-20T05:30:52+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -31,9 +31,9 @@
   "market_data": {
     "_comment": "レイヤー1。バッチがyfinanceから日次取得。",
     "kioxia_price_jpy": {
-      "value": 96900.0,
-      "as_of": "2026-06-18T00:00:00+09:00",
-      "change_pct": 0.9375,
+      "value": 108600.0,
+      "as_of": "2026-06-19T00:00:00+09:00",
+      "change_pct": 12.0743,
       "status": "ok",
       "source": "yfinance:285A.T",
       "market": "JP",
@@ -68,9 +68,9 @@
       },
       "calc": {
         "price": {
-          "value": 96900.0,
+          "value": 108600.0,
           "currency": "JPY",
-          "as_of": "2026-06-18T00:00:00+09:00"
+          "as_of": "2026-06-19T00:00:00+09:00"
         },
         "eps_annualized": {
           "value": 6372.6,
@@ -78,7 +78,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 15.21,
+          "value": 17.04,
           "formula": "price / eps_annualized"
         }
       }
@@ -119,7 +119,7 @@
   ],
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
-    "kioxia_per": 15.21,
+    "kioxia_per": 17.04,
     "sndk_per": 17.34
   },
   "timeseries": [
@@ -1098,6 +1098,23 @@
         "price": 96900.0,
         "eps_annualized": 6372.6,
         "per": 15.21,
+        "eps_valid_from": "2026-05-16",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 2184.75,
+        "eps_annualized": 126.0,
+        "per": 17.34,
+        "eps_valid_from": "2026-05-01",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-06-20",
+      "kioxia": {
+        "price": 108600.0,
+        "eps_annualized": 6372.6,
+        "per": 17.04,
         "eps_valid_from": "2026-05-16",
         "eps_event": null
       },
