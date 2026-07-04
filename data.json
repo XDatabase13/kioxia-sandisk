@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-07-04T05:31:07+09:00",
+    "generated_at": "2026-07-05T05:31:10+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -1349,6 +1349,23 @@
     },
     {
       "date": "2026-07-04",
+      "kioxia": {
+        "price": 83300.0,
+        "eps_annualized": 6372.6,
+        "per": 13.07,
+        "eps_valid_from": "2026-05-16",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1745.0,
+        "eps_annualized": 126.0,
+        "per": 13.85,
+        "eps_valid_from": "2026-05-01",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-07-05",
       "kioxia": {
         "price": 83300.0,
         "eps_annualized": 6372.6,
