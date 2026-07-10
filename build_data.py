@@ -14,6 +14,7 @@ import time
 from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
+import pandas as pd
 import yfinance as yf
 
 try:
@@ -153,14 +154,38 @@ def resolve_eps(eps_history: list, target_date: date) -> dict | None:
 # 株価取得（リトライ付き）
 # =========================================================================
 
+def _quote_latest(ticker_obj) -> tuple:
+    """
+    チャートAPIメタ（quote相当）から直近約定値と時刻を返す。
+    2026-07-06頃からYahooのチャートAPIが東証銘柄で「引け後〜翌営業日の反映まで」
+    直近セッションの日足バーを返さなくなったため、
+    日足の最終バーが古い場合のフォールバックとして使う。
+    直近の history() 呼び出しのレスポンスを再利用するので追加リクエストは発生しない。
+    Returns: (price: float|None, dt: datetime|None)  — dt は取引所タイムゾーン
+    """
+    try:
+        meta    = ticker_obj.get_history_metadata()
+        price   = meta.get("regularMarketPrice")
+        epoch   = meta.get("regularMarketTime")
+        tz_name = meta.get("exchangeTimezoneName")
+        if price is None or epoch is None or tz_name is None:
+            return None, None
+        dt = pd.Timestamp(epoch, unit="s", tz="UTC").tz_convert(tz_name).to_pydatetime()
+        return float(price), dt
+    except Exception:
+        return None, None
+
+
 def fetch_close(ticker_str: str) -> tuple[float | None, str | None, float | None]:
     """
     yfinance でティッカーの直近終値・タイムスタンプ・前日比を取得する。
+    日足最終バーより新しい約定が quote にあれば quote 終値を採用する（_quote_latest 参照）。
     MAX_RETRIES 回全滅時は (None, None, None) を返す。
     """
     for attempt in range(MAX_RETRIES):
         try:
-            hist = yf.Ticker(ticker_str).history(period="10d", auto_adjust=False)
+            t = yf.Ticker(ticker_str)
+            hist = t.history(period="10d", auto_adjust=False)
             if hist.empty:
                 raise ValueError(f"empty history")
             closes = hist["Close"].dropna()
@@ -170,13 +195,24 @@ def fetch_close(ticker_str: str) -> tuple[float | None, str | None, float | None
             last_val = round(float(closes.iloc[-1]), 4)
             last_ts  = closes.index[-1]
             ts_dt    = last_ts.to_pydatetime() if hasattr(last_ts, "to_pydatetime") else last_ts
-            as_of    = to_iso_jst(ts_dt)
+
+            prev_val = float(closes.iloc[-2]) if len(closes) >= 2 else None
+
+            # quoteフォールバック: 日足最終バーより新しい日付の約定があれば採用
+            q_val, q_dt = _quote_latest(t)
+            if (q_val is not None and q_val > 0 and q_dt is not None
+                    and hasattr(ts_dt, "date") and q_dt.date() > ts_dt.date()):
+                print(f"  [補正] {ticker_str}: 日足が{ts_dt.date()}止まりのため"
+                      f" quote終値({q_dt.date()} {q_val})を採用します。")
+                prev_val = last_val
+                last_val = round(float(q_val), 4)
+                ts_dt    = q_dt
+
+            as_of = to_iso_jst(ts_dt)
 
             change_pct = None
-            if len(closes) >= 2:
-                prev_val = float(closes.iloc[-2])
-                if prev_val != 0:
-                    change_pct = round((last_val - prev_val) / abs(prev_val) * 100, 4)
+            if prev_val is not None and prev_val != 0:
+                change_pct = round((last_val - prev_val) / abs(prev_val) * 100, 4)
 
             return last_val, as_of, change_pct
 
