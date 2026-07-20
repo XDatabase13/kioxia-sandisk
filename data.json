@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-07-20T05:30:54+09:00",
+    "generated_at": "2026-07-21T05:30:50+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -40,9 +40,9 @@
       "price_basis": "当日東京終値"
     },
     "sndk_price_usd": {
-      "value": 1354.8199,
-      "as_of": "2026-07-17T13:00:00+09:00",
-      "change_pct": -3.987,
+      "value": 1390.95,
+      "as_of": "2026-07-20T13:00:00+09:00",
+      "change_pct": 2.6668,
       "status": "ok",
       "source": "yfinance:SNDK",
       "market": "US",
@@ -101,9 +101,9 @@
       },
       "calc": {
         "price": {
-          "value": 1354.8199,
+          "value": 1390.95,
           "currency": "USD",
-          "as_of": "2026-07-17T13:00:00+09:00"
+          "as_of": "2026-07-20T13:00:00+09:00"
         },
         "eps_annualized": {
           "value": 126.0,
@@ -111,7 +111,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 10.75,
+          "value": 11.04,
           "formula": "price / eps_annualized"
         }
       }
@@ -120,7 +120,7 @@
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
     "kioxia_per": 8.18,
-    "sndk_per": 10.75
+    "sndk_per": 11.04
   },
   "timeseries": [
     {
@@ -1632,6 +1632,23 @@
         "price": 1354.8199,
         "eps_annualized": 126.0,
         "per": 10.75,
+        "eps_valid_from": "2026-05-01",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-07-21",
+      "kioxia": {
+        "price": 52110.0,
+        "eps_annualized": 6372.6,
+        "per": 8.18,
+        "eps_valid_from": "2026-05-16",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1390.95,
+        "eps_annualized": 126.0,
+        "per": 11.04,
         "eps_valid_from": "2026-05-01",
         "eps_event": null
       }
