@@ -53,6 +53,19 @@
           "source_url": "https://tdnet-pdf.kabutan.jp/20260515/140120260515537803.pdf",
           "basis": "non_gaap_basic",
           "note": "2026/5/15決算発表翌日(5/16)から有効。"
+        },
+        {
+          "valid_from": "2026-08-03",
+          "guidance_format": "point",
+          "eps_quarterly_low": null,
+          "eps_quarterly_high": null,
+          "eps_quarterly": 2335.70,
+          "eps_annualized": 9342.80,
+          "type": "regular_earnings",
+          "source_label": "2026/7/31 Q1決算 FY27Q2見通し",
+          "source_url": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260731/20260731505265.pdf",
+          "basis": "non_gaap_basic",
+          "note": "2026/7/31(金)決算短信発表。kabutanミラー140120260731505265と内容照合済み。土日跨ぎ解決ルールによりvalid_fromは翌営業日の月曜(2026-08-03)。2027年3月期第2四半期(見通し)Non-GAAP基本的1株当たり四半期利益。2026-10-01に1→3株式分割予定(基準日2026-09-30)のため、効力発生日に本エントリ含む有効全EPSを3分の1へ正規化する対応が別途必要。"
         }
       ]
     },
@@ -86,6 +99,19 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/0002023554/000162828026028879/sndkq3-26ex991xpressrelease.htm",
           "basis": "non_gaap_diluted",
           "note": "2026/4/30決算発表翌日(5/1)から有効。"
+        },
+        {
+          "valid_from": "2026-08-06",
+          "guidance_format": "range",
+          "eps_quarterly_low": 44.00,
+          "eps_quarterly_high": 46.00,
+          "eps_quarterly": 45.00,
+          "eps_annualized": 180.00,
+          "type": "regular_earnings",
+          "source_label": "2026/8/5 Q4決算 FY27Q1見通し",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/0001628280-26-053346-index.htm",
+          "basis": "non_gaap_diluted",
+          "note": "会社発表レンジ$44.00〜$46.00の中央値$45.00を運営者判断で採用。2026/8/5(水)決算発表翌日(8/6)から有効。"
         }
       ]
     }
