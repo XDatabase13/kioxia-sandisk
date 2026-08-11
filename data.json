@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-08-11T05:30:57+09:00",
+    "generated_at": "2026-08-12T05:30:53+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -32,7 +32,7 @@
     "_comment": "レイヤー1。バッチがyfinanceから日次取得。",
     "kioxia_price_jpy": {
       "value": 48010.0,
-      "as_of": "2026-08-10T15:30:00+09:00",
+      "as_of": "2026-08-10T00:00:00+09:00",
       "change_pct": 0.5866,
       "status": "ok",
       "source": "yfinance:285A.T",
@@ -40,9 +40,9 @@
       "price_basis": "当日東京終値"
     },
     "sndk_price_usd": {
-      "value": 1237.92,
-      "as_of": "2026-08-10T13:00:00+09:00",
-      "change_pct": 2.1209,
+      "value": 1271.05,
+      "as_of": "2026-08-11T13:00:00+09:00",
+      "change_pct": 2.6763,
       "status": "ok",
       "source": "yfinance:SNDK",
       "market": "US",
@@ -70,7 +70,7 @@
         "price": {
           "value": 48010.0,
           "currency": "JPY",
-          "as_of": "2026-08-10T15:30:00+09:00"
+          "as_of": "2026-08-10T00:00:00+09:00"
         },
         "eps_annualized": {
           "value": 9342.8,
@@ -101,9 +101,9 @@
       },
       "calc": {
         "price": {
-          "value": 1237.92,
+          "value": 1271.05,
           "currency": "USD",
-          "as_of": "2026-08-10T13:00:00+09:00"
+          "as_of": "2026-08-11T13:00:00+09:00"
         },
         "eps_annualized": {
           "value": 180.0,
@@ -111,7 +111,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 6.88,
+          "value": 7.06,
           "formula": "price / eps_annualized"
         }
       }
@@ -120,7 +120,7 @@
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
     "kioxia_per": 5.14,
-    "sndk_per": 6.88
+    "sndk_per": 7.06
   },
   "timeseries": [
     {
@@ -2006,6 +2006,23 @@
         "price": 1237.92,
         "eps_annualized": 180.0,
         "per": 6.88,
+        "eps_valid_from": "2026-08-06",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-08-12",
+      "kioxia": {
+        "price": 48010.0,
+        "eps_annualized": 9342.8,
+        "per": 5.14,
+        "eps_valid_from": "2026-08-03",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1271.05,
+        "eps_annualized": 180.0,
+        "per": 7.06,
         "eps_valid_from": "2026-08-06",
         "eps_event": null
       }
