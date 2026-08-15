@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-08-15T05:30:45+09:00",
+    "generated_at": "2026-08-16T05:30:43+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -31,9 +31,9 @@
   "market_data": {
     "_comment": "レイヤー1。バッチがyfinanceから日次取得。",
     "kioxia_price_jpy": {
-      "value": 51800.0,
-      "as_of": "2026-08-13T00:00:00+09:00",
-      "change_pct": 3.8701,
+      "value": 53740.0,
+      "as_of": "2026-08-14T00:00:00+09:00",
+      "change_pct": 3.7452,
       "status": "ok",
       "source": "yfinance:285A.T",
       "market": "JP",
@@ -68,9 +68,9 @@
       },
       "calc": {
         "price": {
-          "value": 51800.0,
+          "value": 53740.0,
           "currency": "JPY",
-          "as_of": "2026-08-13T00:00:00+09:00"
+          "as_of": "2026-08-14T00:00:00+09:00"
         },
         "eps_annualized": {
           "value": 9342.8,
@@ -78,7 +78,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 5.54,
+          "value": 5.75,
           "formula": "price / eps_annualized"
         }
       }
@@ -119,7 +119,7 @@
   ],
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
-    "kioxia_per": 5.54,
+    "kioxia_per": 5.75,
     "sndk_per": 9.12
   },
   "timeseries": [
@@ -2067,6 +2067,23 @@
         "price": 51800.0,
         "eps_annualized": 9342.8,
         "per": 5.54,
+        "eps_valid_from": "2026-08-03",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1641.11,
+        "eps_annualized": 180.0,
+        "per": 9.12,
+        "eps_valid_from": "2026-08-06",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-08-16",
+      "kioxia": {
+        "price": 53740.0,
+        "eps_annualized": 9342.8,
+        "per": 5.75,
         "eps_valid_from": "2026-08-03",
         "eps_event": null
       },
