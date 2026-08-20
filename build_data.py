@@ -9,6 +9,7 @@ yfinance でレイヤー1（株価）を取得して予想PERを計算し、data
 """
 
 import json
+import re
 import sys
 import time
 from datetime import date, datetime, timezone, timedelta
@@ -68,6 +69,82 @@ def load_json(path: Path) -> dict:
 def save_json(path: Path, data: dict) -> None:
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+# =========================================================================
+# index.html ヒーロー数値の焼き込み(AdSense/SEO対応)
+# update_html_summary() とは別のマーカー(id属性)を対象とするため、
+# 既存の STATIC_SUMMARY 機構には一切触れずに追加する。
+# =========================================================================
+
+def _replace_by_id(content: str, elem_id: str, new_inner: str) -> str:
+    """id="X">... の直後(次の '<' まで)を new_inner に置換する。"""
+    pattern = re.compile(r'(id="' + re.escape(elem_id) + r'"[^>]*>)[^<]*')
+    if not pattern.search(content):
+        print(f"[bake警告] id={elem_id} が見つかりません")
+        return content
+    return pattern.sub(lambda m: m.group(1) + new_inner, content, count=1)
+
+
+def _fmt_num_hero(v, dec: int = 2, prefix: str = "") -> str:
+    if v is None:
+        return "—"
+    return prefix + f"{v:,.{dec}f}"
+
+
+def _fmt_date_jst_hero(iso_str) -> str:
+    if not iso_str:
+        return "—"
+    try:
+        dt = datetime.fromisoformat(iso_str).astimezone(JST)
+        return dt.strftime("%Y/%m/%d %H:%M") + " JST"
+    except Exception:
+        return iso_str
+
+
+def _fill_hero_html(content: str, prefix: str, company: dict) -> str:
+    """index.html内JSの fillHero() と同一ロジック。"""
+    calc  = company.get("calc") or {}
+    per   = (calc.get("per") or {}).get("value")
+    price = (calc.get("price") or {}).get("value")
+    eps   = (calc.get("eps_annualized") or {}).get("value")
+    eps_c = company.get("eps_current") or {}
+    cur   = company.get("base_currency")
+
+    per_text   = f"{per:.2f}倍" if per is not None else "—"
+    price_text = (("¥" if cur == "JPY" else "$") + _fmt_num_hero(price, 0 if cur == "JPY" else 2)) if price is not None else "—"
+    eps_text   = (("¥" if cur == "JPY" else "$") + _fmt_num_hero(eps, 2)) if eps is not None else "—"
+
+    basis = eps_c.get("basis")
+    if basis:
+        basis_label = "Non-GAAP basic" if basis == "non_gaap_basic" else "Non-GAAP diluted"
+        fmt = "レンジ中央値" if eps_c.get("guidance_format") == "range" else "単一値"
+        basis_text = f"{basis_label} / {fmt} / valid_from: {eps_c.get('valid_from') or '—'}"
+    else:
+        basis_text = "—"
+
+    content = _replace_by_id(content, f"{prefix}-per", per_text)
+    content = _replace_by_id(content, f"{prefix}-price", price_text)
+    content = _replace_by_id(content, f"{prefix}-eps", eps_text)
+    content = _replace_by_id(content, f"{prefix}-basis", basis_text)
+    return content
+
+
+def bake_hero_html(output: dict, index_path: Path) -> None:
+    if not index_path.exists():
+        print(f"[bake警告] {index_path} が見つかりません。スキップ。")
+        return
+
+    content = index_path.read_text(encoding="utf-8")
+    meta = output.get("_meta", {})
+    content = _replace_by_id(content, "gen-at", _fmt_date_jst_hero(meta.get("generated_at")))
+
+    companies = {c.get("id"): c for c in output.get("companies", [])}
+    content = _fill_hero_html(content, "kio", companies.get("kioxia") or {})
+    content = _fill_hero_html(content, "sndk", companies.get("sndk") or {})
+
+    index_path.write_text(content, encoding="utf-8")
+    print("[bake] index.html ヒーロー数値を焼き込みました")
 
 
 # =========================================================================
@@ -280,6 +357,10 @@ def build_data() -> None:
     # べき等性チェック: 当日エントリが既に存在すればスキップ
     if any(e["date"] == today_str for e in prev_timeseries):
         print(f"[SKIP] {today_str} のエントリは既に存在します（再実行を検知）。")
+        # timeseries は追記しないが、index.html のヒーロー数値は直近の
+        # data.json内容で再焼き込みしておく（当日2回目以降の手動発火で
+        # bakeだけ取りこぼされるのを防ぐ）。
+        bake_hero_html(prev_data, INDEX_PATH)
         return
 
     # -----------------------------------------------------------------------
@@ -524,6 +605,9 @@ def build_data() -> None:
 
     # index.html の静的サマリーを更新
     update_html_summary(today_str, k_per, s_per, prev_timeseries + [ts_entry])
+
+    # index.html のヒーロー数値（PER/株価/EPS/生成時刻）を焼き込み
+    bake_hero_html(output, INDEX_PATH)
 
     label = {"complete": "OK", "partial": "WARN"}.get(overall_status, overall_status)
     print(f"\n[{label}] data.json 書き出し完了  overall_status={overall_status}  date={today_str}")
