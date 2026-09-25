@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-09-25T07:30:44+09:00",
+    "generated_at": "2026-09-26T07:30:45+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -31,18 +31,18 @@
   "market_data": {
     "_comment": "レイヤー1。バッチがyfinanceから日次取得。",
     "kioxia_price_jpy": {
-      "value": 54580.0,
-      "as_of": "2026-09-24T00:00:00+09:00",
-      "change_pct": 0.0183,
+      "value": 55780.0,
+      "as_of": "2026-09-25T00:00:00+09:00",
+      "change_pct": 2.1986,
       "status": "ok",
       "source": "yfinance:285A.T",
       "market": "JP",
       "price_basis": "当日東京終値"
     },
     "sndk_price_usd": {
-      "value": 1753.62,
-      "as_of": "2026-09-24T13:00:00+09:00",
-      "change_pct": -3.4653,
+      "value": 1777.8,
+      "as_of": "2026-09-25T13:00:00+09:00",
+      "change_pct": 1.3789,
       "status": "ok",
       "source": "yfinance:SNDK",
       "market": "US",
@@ -68,9 +68,9 @@
       },
       "calc": {
         "price": {
-          "value": 54580.0,
+          "value": 55780.0,
           "currency": "JPY",
-          "as_of": "2026-09-24T00:00:00+09:00"
+          "as_of": "2026-09-25T00:00:00+09:00"
         },
         "eps_annualized": {
           "value": 9342.8,
@@ -78,7 +78,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 5.84,
+          "value": 5.97,
           "formula": "price / eps_annualized"
         }
       }
@@ -101,9 +101,9 @@
       },
       "calc": {
         "price": {
-          "value": 1753.62,
+          "value": 1777.8,
           "currency": "USD",
-          "as_of": "2026-09-24T13:00:00+09:00"
+          "as_of": "2026-09-25T13:00:00+09:00"
         },
         "eps_annualized": {
           "value": 180.0,
@@ -111,7 +111,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 9.74,
+          "value": 9.88,
           "formula": "price / eps_annualized"
         }
       }
@@ -119,8 +119,8 @@
   ],
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
-    "kioxia_per": 5.84,
-    "sndk_per": 9.74
+    "kioxia_per": 5.97,
+    "sndk_per": 9.88
   },
   "timeseries": [
     {
@@ -2771,6 +2771,23 @@
         "price": 1753.62,
         "eps_annualized": 180.0,
         "per": 9.74,
+        "eps_valid_from": "2026-08-06",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-09-26",
+      "kioxia": {
+        "price": 55780.0,
+        "eps_annualized": 9342.8,
+        "per": 5.97,
+        "eps_valid_from": "2026-08-03",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1777.8,
+        "eps_annualized": 180.0,
+        "per": 9.88,
         "eps_valid_from": "2026-08-06",
         "eps_event": null
       }
