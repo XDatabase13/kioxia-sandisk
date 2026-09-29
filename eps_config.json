@@ -31,41 +31,41 @@
         {
           "valid_from": "2026-04-01",
           "guidance_format": "range",
-          "eps_quarterly_low": 569.36,
-          "eps_quarterly_high": 679.56,
-          "eps_quarterly": 624.46,
-          "eps_annualized": 2497.84,
+          "eps_quarterly_low": 189.79,
+          "eps_quarterly_high": 226.52,
+          "eps_quarterly": 208.15,
+          "eps_annualized": 832.60,
           "type": "regular_earnings",
           "source_label": "2026/2/12 Q3決算 Q4見通し(レンジ)",
           "source_url": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260212/20260212556330.pdf",
           "basis": "non_gaap_basic",
-          "note": "グラフ起点(2026/4/1)への初期投入値。実際の開示日は2026/2/12（起点より前）。4/1〜5/15の間はこのEPSが有効。"
+          "note": "グラフ起点(2026/4/1)への初期投入値。実際の開示日は2026/2/12（起点より前）。4/1〜5/15の間はこのEPSが有効。【2026-10-01 1:3分割により÷3正規化済み（2026-09-30実施・二重適用禁止）】分割前値: eps_quarterly=624.46 / eps_annualized=2497.84"
         },
         {
           "valid_from": "2026-05-16",
           "guidance_format": "point",
           "eps_quarterly_low": null,
           "eps_quarterly_high": null,
-          "eps_quarterly": 1593.15,
-          "eps_annualized": 6372.60,
+          "eps_quarterly": 531.05,
+          "eps_annualized": 2124.20,
           "type": "regular_earnings",
           "source_label": "2026/5/15 本決算 FY27Q1見通し",
           "source_url": "https://tdnet-pdf.kabutan.jp/20260515/140120260515537803.pdf",
           "basis": "non_gaap_basic",
-          "note": "2026/5/15決算発表翌日(5/16)から有効。"
+          "note": "2026/5/15決算発表翌日(5/16)から有効。【2026-10-01 1:3分割により÷3正規化済み（2026-09-30実施・二重適用禁止）】分割前値: eps_quarterly=1593.15 / eps_annualized=6372.60"
         },
         {
           "valid_from": "2026-08-03",
           "guidance_format": "point",
           "eps_quarterly_low": null,
           "eps_quarterly_high": null,
-          "eps_quarterly": 2335.70,
-          "eps_annualized": 9342.80,
+          "eps_quarterly": 778.57,
+          "eps_annualized": 3114.28,
           "type": "regular_earnings",
           "source_label": "2026/7/31 Q1決算 FY27Q2見通し",
           "source_url": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260731/20260731505265.pdf",
           "basis": "non_gaap_basic",
-          "note": "2026/7/31(金)決算短信発表。kabutanミラー140120260731505265と内容照合済み。土日跨ぎ解決ルールによりvalid_fromは翌営業日の月曜(2026-08-03)。2027年3月期第2四半期(見通し)Non-GAAP基本的1株当たり四半期利益。2026-10-01に1→3株式分割予定(基準日2026-09-30)のため、効力発生日に本エントリ含む有効全EPSを3分の1へ正規化する対応が別途必要。"
+          "note": "2026/7/31(金)決算短信発表。kabutanミラー140120260731505265と内容照合済み。土日跨ぎ解決ルールによりvalid_fromは翌営業日の月曜(2026-08-03)。2027年3月期第2四半期(見通し)Non-GAAP基本的1株当たり四半期利益。2026-10-01に1→3株式分割予定(基準日2026-09-30)のため、効力発生日に本エントリ含む有効全EPSを3分の1へ正規化する対応が別途必要。【2026-10-01 1:3分割により÷3正規化済み（2026-09-30実施・二重適用禁止）】分割前値: eps_quarterly=2335.70 / eps_annualized=9342.80"
         }
       ]
     },
