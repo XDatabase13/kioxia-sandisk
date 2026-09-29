@@ -552,6 +552,14 @@ footer {
     return hist.find(e => e.valid_from === validFrom) || null;
   }
 
+  // 直前（valid_from が最大で validFrom 未満）の eps_config エントリ
+  function lookupPrevEpsCfg(companyId, validFrom) {
+    const hist = epsHistMap[companyId] || [];
+    return hist
+      .filter(e => e.valid_from < validFrom)
+      .reduce((a, e) => (!a || e.valid_from > a.valid_from ? e : a), null);
+  }
+
   const epsEvents = []; // { date, company, type, epsNewAnn, epsPrevAnn, validFrom, srcLabel, srcUrl }
   const prevEps = { kioxia: null, sndk: null };
 
@@ -560,12 +568,16 @@ footer {
       const co = entry[id] || {};
       if (co.eps_event) {
         const cfgEntry = lookupEpsCfg(id, co.eps_valid_from);
+        // EPS値は eps_config.json を正とする（株式分割の÷正規化が反映される。
+        // timeseries の eps_annualized は記録当時の単位で固定されているため）。
+        // eps_config に該当がなければ timeseries の値にフォールバック。
+        const prevCfg = cfgEntry ? lookupPrevEpsCfg(id, co.eps_valid_from) : null;
         epsEvents.push({
           date:       entry.date,
           company:    id,
           type:       co.eps_event,
-          epsNewAnn:  co.eps_annualized,
-          epsPrevAnn: prevEps[id],
+          epsNewAnn:  cfgEntry ? cfgEntry.eps_annualized : co.eps_annualized,
+          epsPrevAnn: cfgEntry ? (prevCfg?.eps_annualized ?? null) : prevEps[id],
           validFrom:  co.eps_valid_from,
           srcLabel:   cfgEntry?.source_label || '—',
           srcUrl:     cfgEntry?.source_url   || null,
