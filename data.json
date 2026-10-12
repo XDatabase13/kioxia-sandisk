@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-10-12T07:30:50+09:00",
+    "generated_at": "2026-10-13T07:30:50+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -40,9 +40,9 @@
       "price_basis": "当日東京終値"
     },
     "sndk_price_usd": {
-      "value": 1581.8199,
-      "as_of": "2026-10-09T13:00:00+09:00",
-      "change_pct": -1.7174,
+      "value": 1487.33,
+      "as_of": "2026-10-12T13:00:00+09:00",
+      "change_pct": -5.9735,
       "status": "ok",
       "source": "yfinance:SNDK",
       "market": "US",
@@ -101,9 +101,9 @@
       },
       "calc": {
         "price": {
-          "value": 1581.8199,
+          "value": 1487.33,
           "currency": "USD",
-          "as_of": "2026-10-09T13:00:00+09:00"
+          "as_of": "2026-10-12T13:00:00+09:00"
         },
         "eps_annualized": {
           "value": 180.0,
@@ -111,7 +111,7 @@
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 8.79,
+          "value": 8.26,
           "formula": "price / eps_annualized"
         }
       }
@@ -120,7 +120,7 @@
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
     "kioxia_per": 5.62,
-    "sndk_per": 8.79
+    "sndk_per": 8.26
   },
   "timeseries": [
     {
@@ -3060,6 +3060,23 @@
         "price": 1581.8199,
         "eps_annualized": 180.0,
         "per": 8.79,
+        "eps_valid_from": "2026-08-06",
+        "eps_event": null
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "kioxia": {
+        "price": 17505.0,
+        "eps_annualized": 3114.28,
+        "per": 5.62,
+        "eps_valid_from": "2026-08-03",
+        "eps_event": null
+      },
+      "sndk": {
+        "price": 1487.33,
+        "eps_annualized": 180.0,
+        "per": 8.26,
         "eps_valid_from": "2026-08-06",
         "eps_event": null
       }
