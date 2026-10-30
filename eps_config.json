@@ -66,6 +66,19 @@
           "source_url": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260731/20260731505265.pdf",
           "basis": "non_gaap_basic",
           "note": "2026/7/31(金)決算短信発表。kabutanミラー140120260731505265と内容照合済み。土日跨ぎ解決ルールによりvalid_fromは翌営業日の月曜(2026-08-03)。2027年3月期第2四半期(見通し)Non-GAAP基本的1株当たり四半期利益。2026-10-01に1→3株式分割予定(基準日2026-09-30)のため、効力発生日に本エントリ含む有効全EPSを3分の1へ正規化する対応が別途必要。【2026-10-01 1:3分割により÷3正規化済み（2026-09-30実施・二重適用禁止）】分割前値: eps_quarterly=2335.70 / eps_annualized=9342.80"
+        },
+        {
+          "valid_from": "2026-11-02",
+          "guidance_format": "point",
+          "eps_quarterly_low": null,
+          "eps_quarterly_high": null,
+          "eps_quarterly": 854.24,
+          "eps_annualized": 3416.96,
+          "type": "regular_earnings",
+          "source_label": "2026/10/30 Q2決算 FY27Q3見通し",
+          "source_url": "https://tdnet-pdf.kabutan.jp/20261030/140120261030561535.pdf",
+          "basis": "non_gaap_basic",
+          "note": "2026/10/30(金)18:45頃の決算短信発表（同日07:30のバッチより後）。土日跨ぎ解決ルールによりvalid_fromは翌営業日の月曜(2026-11-02)。2027年3月期第3四半期(見通し)Non-GAAP基本的1株当たり四半期利益。TDnet資料番号140120261030561535、6ページ「連結業績の見通し」表。2026-10-01の1:3分割を前連結会計年度の期首に行ったと仮定した開示値のため分割後基準（÷3正規化は不要・適用禁止）。"
         }
       ]
     },
@@ -112,6 +125,19 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/0001628280-26-053346-index.htm",
           "basis": "non_gaap_diluted",
           "note": "会社発表レンジ$44.00〜$46.00の中央値$45.00を運営者判断で採用。2026/8/5(水)決算発表翌日(8/6)から有効。"
+        },
+        {
+          "valid_from": "2026-11-02",
+          "guidance_format": "range",
+          "eps_quarterly_low": 55.00,
+          "eps_quarterly_high": 57.00,
+          "eps_quarterly": 56.00,
+          "eps_annualized": 224.00,
+          "type": "regular_earnings",
+          "source_label": "2026/10/29 Q1決算 FY27Q2見通し",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+          "basis": "non_gaap_diluted",
+          "note": "会社発表レンジ$55.00〜$57.00の中央値$56.00を採用。原文は\"on a pre-split basis\"で分割前基準。8:1株式分割（基準日2026-11-09、分割後の取引開始2026-11-20寄り付き）の÷8正規化は本エントリでは未実施で、権利落ち日に別タスクで行う。2026/10/29(米国東部時間・引け後)発表＝日本時間10/30早朝で10/30のバッチより前だが、10/30の行は旧EPSで生成済みのため遡及書き換えを避け、update_ruleの翌営業日ではなくキオクシアと同じ2026-11-02をvalid_fromとする。"
         }
       ]
     }
