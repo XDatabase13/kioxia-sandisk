@@ -2,7 +2,7 @@
   "_meta": {
     "schema_version": "1.0",
     "description": "キオクシア×サンディスク 予想PER比較。バッチが日次生成。",
-    "generated_at": "2026-11-01T07:30:48+09:00",
+    "generated_at": "2026-11-02T07:30:44+09:00",
     "overall_status": "complete",
     "_status_vocabulary": {
       "overall_status": "complete=両社PER算出成功 / partial=一方の株価がstaleまたはPERがnull / failed=両社株価取得不能（当日スキップ）",
@@ -57,14 +57,14 @@
       "base_currency": "JPY",
       "status": "ok",
       "eps_current": {
-        "eps_quarterly": 778.57,
-        "eps_annualized": 3114.28,
-        "valid_from": "2026-08-03",
+        "eps_quarterly": 854.24,
+        "eps_annualized": 3416.96,
+        "valid_from": "2026-11-02",
         "type": "regular_earnings",
         "guidance_format": "point",
         "basis": "non_gaap_basic",
-        "source_label": "2026/7/31 Q1決算 FY27Q2見通し",
-        "source_url": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20260731/20260731505265.pdf"
+        "source_label": "2026/10/30 Q2決算 FY27Q3見通し",
+        "source_url": "https://tdnet-pdf.kabutan.jp/20261030/140120261030561535.pdf"
       },
       "calc": {
         "price": {
@@ -73,12 +73,12 @@
           "as_of": "2026-10-30T00:00:00+09:00"
         },
         "eps_annualized": {
-          "value": 3114.28,
+          "value": 3416.96,
           "currency": "JPY",
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 4.33,
+          "value": 3.94,
           "formula": "price / eps_annualized"
         }
       }
@@ -90,14 +90,14 @@
       "base_currency": "USD",
       "status": "ok",
       "eps_current": {
-        "eps_quarterly": 45.0,
-        "eps_annualized": 180.0,
-        "valid_from": "2026-08-06",
+        "eps_quarterly": 56.0,
+        "eps_annualized": 224.0,
+        "valid_from": "2026-11-02",
         "type": "regular_earnings",
         "guidance_format": "range",
         "basis": "non_gaap_diluted",
-        "source_label": "2026/8/5 Q4決算 FY27Q1見通し",
-        "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/0001628280-26-053346-index.htm"
+        "source_label": "2026/10/29 Q1決算 FY27Q2見通し",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm"
       },
       "calc": {
         "price": {
@@ -106,12 +106,12 @@
           "as_of": "2026-10-30T13:00:00+09:00"
         },
         "eps_annualized": {
-          "value": 180.0,
+          "value": 224.0,
           "currency": "USD",
           "formula": "eps_quarterly × 4"
         },
         "per": {
-          "value": 6.39,
+          "value": 5.14,
           "formula": "price / eps_annualized"
         }
       }
@@ -119,8 +119,8 @@
   ],
   "comparison": {
     "_comment": "PERは無次元（倍率）なので自国通貨が約分され日米直接比較可能。",
-    "kioxia_per": 4.33,
-    "sndk_per": 6.39
+    "kioxia_per": 3.94,
+    "sndk_per": 5.14
   },
   "timeseries": [
     {
@@ -3402,6 +3402,23 @@
         "per": 6.39,
         "eps_valid_from": "2026-08-06",
         "eps_event": null
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "kioxia": {
+        "price": 13470.0,
+        "eps_annualized": 3416.96,
+        "per": 3.94,
+        "eps_valid_from": "2026-11-02",
+        "eps_event": "regular_earnings"
+      },
+      "sndk": {
+        "price": 1150.89,
+        "eps_annualized": 224.0,
+        "per": 5.14,
+        "eps_valid_from": "2026-11-02",
+        "eps_event": "regular_earnings"
       }
     }
   ],
