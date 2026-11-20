@@ -90,54 +90,54 @@
         {
           "valid_from": "2026-04-01",
           "guidance_format": "range",
-          "eps_quarterly_low": 12.00,
-          "eps_quarterly_high": 14.00,
-          "eps_quarterly": 13.00,
-          "eps_annualized": 52.00,
+          "eps_quarterly_low": 1.50,
+          "eps_quarterly_high": 1.75,
+          "eps_quarterly": 1.625,
+          "eps_annualized": 6.50,
           "type": "regular_earnings",
           "source_label": "2026/1/29 Q2決算 Q3見通し",
           "source_url": "https://www.sec.gov/Archives/edgar/data/0002023554/000162828026004121/sndkq2fy26ex991-pressrelea.htm",
           "basis": "non_gaap_diluted",
-          "note": "グラフ起点(2026/4/1)への初期投入値。実際の開示日は2026/1/29（起点より前）。4/1〜4/30の間はこのEPSが有効。"
+          "note": "グラフ起点(2026/4/1)への初期投入値。実際の開示日は2026/1/29（起点より前）。4/1〜4/30の間はこのEPSが有効。2026-11-21 SNDK 8:1分割（米国11/20取引開始）で÷8正規化。分割前の値: 四半期13.00／年率52.00"
         },
         {
           "valid_from": "2026-05-01",
           "guidance_format": "range",
-          "eps_quarterly_low": 30.00,
-          "eps_quarterly_high": 33.00,
-          "eps_quarterly": 31.50,
-          "eps_annualized": 126.00,
+          "eps_quarterly_low": 3.75,
+          "eps_quarterly_high": 4.125,
+          "eps_quarterly": 3.9375,
+          "eps_annualized": 15.75,
           "type": "regular_earnings",
           "source_label": "2026/4/30 Q3決算 Q4見通し",
           "source_url": "https://www.sec.gov/Archives/edgar/data/0002023554/000162828026028879/sndkq3-26ex991xpressrelease.htm",
           "basis": "non_gaap_diluted",
-          "note": "2026/4/30決算発表翌日(5/1)から有効。"
+          "note": "2026/4/30決算発表翌日(5/1)から有効。2026-11-21 SNDK 8:1分割（米国11/20取引開始）で÷8正規化。分割前の値: 四半期31.50／年率126.00"
         },
         {
           "valid_from": "2026-08-06",
           "guidance_format": "range",
-          "eps_quarterly_low": 44.00,
-          "eps_quarterly_high": 46.00,
-          "eps_quarterly": 45.00,
-          "eps_annualized": 180.00,
+          "eps_quarterly_low": 5.50,
+          "eps_quarterly_high": 5.75,
+          "eps_quarterly": 5.625,
+          "eps_annualized": 22.50,
           "type": "regular_earnings",
           "source_label": "2026/8/5 Q4決算 FY27Q1見通し",
           "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/0001628280-26-053346-index.htm",
           "basis": "non_gaap_diluted",
-          "note": "会社発表レンジ$44.00〜$46.00の中央値$45.00を運営者判断で採用。2026/8/5(水)決算発表翌日(8/6)から有効。"
+          "note": "会社発表レンジ$44.00〜$46.00の中央値$45.00を運営者判断で採用。2026/8/5(水)決算発表翌日(8/6)から有効。2026-11-21 SNDK 8:1分割（米国11/20取引開始）で÷8正規化。分割前の値: 四半期45.00／年率180.00"
         },
         {
           "valid_from": "2026-11-02",
           "guidance_format": "range",
-          "eps_quarterly_low": 55.00,
-          "eps_quarterly_high": 57.00,
-          "eps_quarterly": 56.00,
-          "eps_annualized": 224.00,
+          "eps_quarterly_low": 6.875,
+          "eps_quarterly_high": 7.125,
+          "eps_quarterly": 7.00,
+          "eps_annualized": 28.00,
           "type": "regular_earnings",
           "source_label": "2026/10/29 Q1決算 FY27Q2見通し",
           "source_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
           "basis": "non_gaap_diluted",
-          "note": "会社発表レンジ$55.00〜$57.00の中央値$56.00を採用。原文は\"on a pre-split basis\"で分割前基準。8:1株式分割（基準日2026-11-09、分割後の取引開始2026-11-20寄り付き）の÷8正規化は本エントリでは未実施で、権利落ち日に別タスクで行う。2026/10/29(米国東部時間・引け後)発表＝日本時間10/30早朝で10/30のバッチより前だが、10/30の行は旧EPSで生成済みのため遡及書き換えを避け、update_ruleの翌営業日ではなくキオクシアと同じ2026-11-02をvalid_fromとする。"
+          "note": "会社発表レンジ$55.00〜$57.00の中央値$56.00を採用。原文は\"on a pre-split basis\"で分割前基準。8:1株式分割（基準日2026-11-09、分割後の取引開始2026-11-20寄り付き）の÷8正規化は本エントリでは未実施で、権利落ち日に別タスクで行う。2026/10/29(米国東部時間・引け後)発表＝日本時間10/30早朝で10/30のバッチより前だが、10/30の行は旧EPSで生成済みのため遡及書き換えを避け、update_ruleの翌営業日ではなくキオクシアと同じ2026-11-02をvalid_fromとする。2026-11-21 SNDK 8:1分割（米国11/20取引開始）で÷8正規化。分割前の値: 四半期56.00／年率224.00"
         }
       ]
     }
